@@ -34,6 +34,7 @@ func GetProgListView(app *Application) *tview.Flex {
 		bpfListTable.SetCell(0, 1, tview.NewTableCell("Type").SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 		bpfListTable.SetCell(0, 2, tview.NewTableCell("ID").SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 		bpfListTable.SetCell(0, 3, tview.NewTableCell("Created By").SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
+		bpfListTable.SetCell(0, 4, tview.NewTableCell("Maps").SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 
 		ebpgProgList, _ := bpf.GetProgListWithInfo(programName)
 
@@ -41,10 +42,12 @@ func GetProgListView(app *Application) *tview.Flex {
 			uid, _ := prog.ProgramInfo.CreatedByUID()
 			username, _ := getUsernameFromUID(uid)
 			id, _ := prog.ProgramInfo.ID()
+			maps, _ := bpf.GetAllMaps(id)
 			bpfListTable.SetCell(i+1, 0, tview.NewTableCell(prog.ProgramInfo.Name).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 			bpfListTable.SetCell(i+1, 1, tview.NewTableCell(prog.Type).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 			bpfListTable.SetCell(i+1, 2, tview.NewTableCell(fmt.Sprintf("%d", id)).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 			bpfListTable.SetCell(i+1, 3, tview.NewTableCell(username).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
+			bpfListTable.SetCell(i+1, 4, tview.NewTableCell(fmt.Sprintf("%d", len(maps))).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 		}
 	}
 
