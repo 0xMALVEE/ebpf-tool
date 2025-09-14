@@ -32,6 +32,20 @@ sudo apt-get install clang llvm
 # For Fedora/RHEL
 sudo dnf install clang llvm
 ```
+```
+clang & llvm
+sudo apt update
+sudo apt install clang llvm
+
+linux headers
+sudo apt-get install -y linux-headers-$(uname -r)
+
+libbpf development headers
+sudo apt-get install -y libbpf-dev
+
+architecture-specific headers
+sudo apt-get install -y gcc-multilib
+```
 
 2. Install the Go dependencies:
 
