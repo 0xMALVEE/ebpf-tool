@@ -43,6 +43,11 @@ func GetProgListView(app *Application) *tview.Flex {
 			username, _ := getUsernameFromUID(uid)
 			id, _ := prog.ProgramInfo.ID()
 			maps, _ := bpf.GetAllMaps(id)
+			for _, m := range maps {
+				fmt.Printf("Type: %s\n", m.Type())
+				fmt.Printf("FD: %d\n", m.FD())
+				fmt.Println("---")
+			}
 			bpfListTable.SetCell(i+1, 0, tview.NewTableCell(prog.ProgramInfo.Name).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 			bpfListTable.SetCell(i+1, 1, tview.NewTableCell(prog.Type).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
 			bpfListTable.SetCell(i+1, 2, tview.NewTableCell(fmt.Sprintf("%d", id)).SetExpansion(1).SetTextColor(tview.Styles.PrimaryTextColor))
@@ -61,6 +66,8 @@ func GetProgListView(app *Application) *tview.Flex {
 			app.SelectedProgramID = ebpf.ProgramID(progID)
 			app.SetCurrentView(func() {
 				app.CurrentView = ProgramMapsView
+				// Regenerate the MapsView with the new program ID
+				app.MapsView = GetMapsView(app)
 				app.App.SetRoot(app.MapsView, true)
 			})
 		}
